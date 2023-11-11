@@ -79,6 +79,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "color-thief",
+ "dominant_color",
  "http",
  "image",
  "palette_extract",
@@ -149,6 +150,12 @@ name = "crunchy"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7a81dae078cea95a014a339291cec439d2f232ebe854a9d672b796c6afafa9b7"
+
+[[package]]
+name = "dominant_color"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a4ac4e005485886ae93a8bf162ed056e809e14bd61877cda818adfe3e2a0056d"
 
 [[package]]
 name = "either"

@@ -1,11 +1,12 @@
 use anyhow::anyhow;
+use serde::Serialize;
 use spin_sdk::http::{IntoResponse, Request};
 use spin_sdk::http_component;
-use serde::Serialize;
+use std::collections::HashSet;
 
 use palette_extract::get_palette_rgb;
 
-#[derive(Serialize)]
+#[derive(Serialize, Eq, PartialEq, Hash)]
 struct Color {
     red: u8,
     green: u8,
@@ -26,22 +27,35 @@ fn handle_color_bandit(req: Request) -> anyhow::Result<impl IntoResponse> {
     let pixels = img.as_bytes();
 
     // Extract the color palette using `palette_extract`
-    let palette = get_palette_rgb(pixels);
+    let extracted_palette = get_palette_rgb(pixels);
+
+    let converted_palette: Vec<Color> = extracted_palette
+    .iter()
+    .map(|color| Color {
+        red: color.r,
+        green: color.g,
+        blue: color.b,
+    })
+    .collect();
+
+    let unique_colors: HashSet<_> = converted_palette.into_iter().collect();
+    let palette: Vec<Color> = unique_colors.into_iter().collect();
 
     let serializable_palette: Vec<Color> = palette
         .iter()
         .map(|color| Color {
-            red: color.r,
-            green: color.g,
-            blue: color.b,
+            red: color.red,
+            green: color.green,
+            blue: color.blue,
         })
         .collect();
 
-    let result = serde_json::to_string(&serializable_palette)
-        .unwrap_or_else(|_| "[]".to_string());
+    // let result = serde_json::to_string(&serializable_palette).unwrap_or_else(|_| "[]".to_string());
+    let result = serde_json::to_string(&palette)
+    .unwrap_or_else(|_| "[]".to_string());
 
     Ok(http::Response::builder()
         .status(200)
-        .header("content-type", "application/json") 
+        .header("content-type", "application/json")
         .body(result)?)
 }

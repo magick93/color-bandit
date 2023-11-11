@@ -1,0 +1,18 @@
+spin_manifest_version = 2
+
+[application]
+name = "color-bandit"
+version = "0.1.0"
+authors = ["Anton Hughes <kurrent93@gmail.com>"]
+description = "Color palette generator"
+
+[[trigger.http]]
+route = "/bandit"
+component = "color-bandit"
+
+[component.color-bandit]
+source = "target/wasm32-wasi/release/color_bandit.wasm"
+allowed_outbound_hosts = []
+[component.color-bandit.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]

@@ -81,6 +81,7 @@ dependencies = [
  "color-thief",
  "http",
  "image",
+ "palette_extract",
  "serde",
  "serde_json",
  "spin-sdk",
@@ -493,6 +494,12 @@ name = "once_cell"
 version = "1.18.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dd8b5dd2ae5ed71462c540258bedcb51965123ad7e7ccf4b9a8cafaa4a63576d"
+
+[[package]]
+name = "palette_extract"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "37152de66c36e76d4637af2a51310ede2c0e42b80357fa517bf1b595b56489a4"
 
 [[package]]
 name = "percent-encoding"

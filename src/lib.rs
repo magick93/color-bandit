@@ -41,14 +41,6 @@ fn handle_color_bandit(req: Request) -> anyhow::Result<impl IntoResponse> {
     let unique_colors: HashSet<_> = converted_palette.into_iter().collect();
     let palette: Vec<Color> = unique_colors.into_iter().collect();
 
-    let serializable_palette: Vec<Color> = palette
-        .iter()
-        .map(|color| Color {
-            red: color.red,
-            green: color.green,
-            blue: color.blue,
-        })
-        .collect();
 
     // let result = serde_json::to_string(&serializable_palette).unwrap_or_else(|_| "[]".to_string());
     let result = serde_json::to_string(&palette)
